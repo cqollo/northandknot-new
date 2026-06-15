@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     // Email TO the business owner
     await resend.emails.send({
-      from: 'North & Knot <enquiries@northandknot.co.ke>',
+      from: 'North & Knot <onboarding@resend.dev>',
       to: process.env.OWNER_EMAIL || 'hello@northandknot.co.ke',
       replyTo: email,
       subject: `New enquiry from ${firstName} ${lastName}${enquiryType ? ` — ${enquiryType}` : ''}`,
@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
     // Confirmation email TO the client
     await resend.emails.send({
-      from: 'North & Knot <hello@northandknot.co.ke>',
+      from: 'North & Knot <onboarding@resend.dev>',
       to: email,
       subject: 'We received your enquiry — North & Knot',
       html: `
