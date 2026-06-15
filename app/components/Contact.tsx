@@ -1,9 +1,9 @@
 'use client';
 import { useState, FormEvent } from 'react';
-import { Resend } from 'resend';
+
 
 const enquiryTypes = ['New commission', 'Repair / restoration', 'General enquiry', 'Press / collaboration'];
-const resend = new Resend(process.env.RESEND_API_KEY);
+
 const budgets = ['Under KES 50,000', 'KES 50,000 – 150,000', 'KES 150,000 – 400,000', 'KES 400,000+'];
 
 const socialLinks = [
