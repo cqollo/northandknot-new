@@ -1,7 +1,6 @@
 'use client';
 import { useState, FormEvent } from 'react';
 
-
 const enquiryTypes = ['New commission', 'Repair / restoration', 'General enquiry', 'Press / collaboration'];
 
 const budgets = ['Under KES 50,000', 'KES 50,000 – 150,000', 'KES 150,000 – 400,000', 'KES 400,000+'];
@@ -133,15 +132,21 @@ export default function Contact() {
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-5">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {(['firstName', 'lastName'] as const).map((field, i) => (
+              {([
+                { field: 'firstName', label: 'First name', placeholder: 'e.g. Aisha', auto: 'given-name' },
+                { field: 'lastName', label: 'Last name', placeholder: 'e.g. Mutua', auto: 'family-name' }
+              ] as const).map(({ field, label, placeholder, auto }) => (
                 <div key={field} className="flex flex-col gap-1.5">
-                  <label className="text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--cream-muted)' }}>
-                    {i === 0 ? 'First name' : 'Last name'}
+                  <label htmlFor={field} className="text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--cream-muted)' }}>
+                    {label}
                   </label>
                   <input
                     required
+                    id={field}
+                    name={field}
+                    autoComplete={auto}
                     style={inputStyle}
-                    placeholder={i === 0 ? 'e.g. Aisha' : 'e.g. Mutua'}
+                    placeholder={placeholder}
                     value={form[field]}
                     onChange={set(field)}
                     onFocus={e => (e.target.style.borderColor = 'var(--brass)')}
@@ -152,10 +157,13 @@ export default function Contact() {
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--cream-muted)' }}>Email address</label>
+              <label htmlFor="email" className="text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--cream-muted)' }}>Email address</label>
               <input
                 type="email"
                 required
+                id="email"
+                name="email"
+                autoComplete="email"
                 style={inputStyle}
                 placeholder="you@example.com"
                 value={form.email}
@@ -170,8 +178,10 @@ export default function Contact() {
               { field: 'budget', label: 'Approximate budget', options: budgets, placeholder: 'Select a range' },
             ].map(({ field, label, options, placeholder }) => (
               <div key={field} className="flex flex-col gap-1.5">
-                <label className="text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--cream-muted)' }}>{label}</label>
+                <label htmlFor={field} className="text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--cream-muted)' }}>{label}</label>
                 <select
+                  id={field}
+                  name={field}
                   style={{ ...inputStyle, cursor: 'pointer' }}
                   value={form[field as keyof typeof form]}
                   onChange={set(field)}
@@ -185,8 +195,10 @@ export default function Contact() {
             ))}
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--cream-muted)' }}>Tell us about your project</label>
+              <label htmlFor="message" className="text-xs font-medium tracking-widest uppercase" style={{ color: 'var(--cream-muted)' }}>Tell us about your project</label>
               <textarea
+                id="message"
+                name="message"
                 rows={5}
                 style={{ ...inputStyle, resize: 'vertical', minHeight: '130px' }}
                 placeholder="Describe the piece, the space it's for, any references..."
